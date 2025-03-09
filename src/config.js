@@ -46,8 +46,8 @@ module.exports = {
     listenIp: '0.0.0.0',
     listenPort: 9002,
     // ssl/README.md
-    sslCrt: '/api/certificate.crt',
-    sslKey: '//api/private.key',
+    sslCrt: '/SSL_CERT_PATH',
+    sslKey: '/SSL_KEY_PATH',
     apiKeySecret: 'API_KEY_SECRET',
     publicFolder: 'public',
     audioLevelObserverEnabled: true,
