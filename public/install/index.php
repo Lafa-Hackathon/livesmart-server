@@ -20,12 +20,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dbPrefix = '';
     $errors = array();
 
+    // $output = shell_exec('node -v');
+    // $curNumber = str_replace('v', '', $output);
+    // $curNumber = explode('.', $curNumber);
+    // if (!isset($curNumber[0]) || $curNumber[0] < 16) {
+    //     array_push($errors, 'Node version not suitable or Node is missing. You need to install it.<br/>');
+    // }
+
+
+    // Execute node -v and check for errors
     $output = shell_exec('node -v');
-    $curNumber = str_replace('v', '', $output);
-    $curNumber = explode('.', $curNumber);
-    if (!isset($curNumber[0]) || $curNumber[0] < 16) {
-        array_push($errors, 'Node version not suitable or Node is missing. You need to install it.<br/>');
+    if ($output === null) {
+        array_push($errors, 'Node.js is not installed or not accessible. Please install Node.js version 16 or higher and ensure it\'s in the system PATH.');
+    } else {
+        $versionString = trim($output);
+        $versionString = str_replace('v', '', $versionString);
+        $versionParts = explode('.', $versionString);
+        if (empty($versionParts[0]) || (int)$versionParts[0] < 16) {
+            array_push($errors, 'Node.js version is too old. You need version 16 or higher.');
+        }
     }
+        
 
     if (!is_dir($serverFolder) && !is_dir($serverFolder . '/config')) {
         array_push($errors, 'Server folder is not correct. Make sure the folder exists and your Server files are there.<br/>');
